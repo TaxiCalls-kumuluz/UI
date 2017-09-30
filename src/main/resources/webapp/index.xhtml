@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:h="http://xmlns.jcp.org/jsf/html">
+    <h:head>
+        <title>TaxiCalls</title>
+    </h:head>
+
+    <h:body>
+        <h:dataTable value="#{passengerBean.passengers}" var="passenger">
+            <h:column>
+                <f:facet name="header">ID</f:facet>
+                    #{passenger.id}
+            </h:column>
+            <h:column>
+                <f:facet name="header">e-mail</f:facet>
+                    #{passenger.email}
+            </h:column>
+            <h:column>
+                <f:facet name="header">password</f:facet>
+                    #{passenger.password}
+            </h:column>
+        </h:dataTable>
+        <h:dataTable value="#{routesBean.allRoutes}" var="route">
+            <h:column>
+                <f:facet name="header">ID</f:facet>
+                    #{route.id}
+            </h:column>
+        </h:dataTable>
+        <h:form>
+            <h:inputText value="#{passengerBean.route.id}" required="true" label=""/>
+            <h:commandButton value="Submit" actionListener="#{passengerBean.trip()}" />
+        </h:form>
+        <h:dataTable value="#{passengerBean.availableRoutes}" var="route">
+            <h:column>
+                <f:facet name="header">ID</f:facet>
+                    #{route.id}
+            </h:column>
+        </h:dataTable>
+    </h:body>
+</html>
