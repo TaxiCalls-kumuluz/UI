@@ -1,9 +1,11 @@
 package com.taxicalls.ui;
 
+import com.taxicalls.ui.model.Driver;
 import com.taxicalls.ui.model.Passenger;
-import com.taxicalls.ui.model.Route;
+import com.taxicalls.ui.model.Trip;
 import com.taxicalls.utils.ServiceRegistry;
 import java.util.ArrayList;
+import java.util.Collection;
 
 import java.util.List;
 
@@ -20,40 +22,40 @@ public class PassengerBean {
     @Inject
     private ServiceRegistry serviceRegistry;
 
-    private final Route route;
-    private List<Route> availableRoutes;
+    private final Trip trip;
+    private Collection<Driver> availableDrivers;
 
     public PassengerBean() {
-        this.route = new Route();
-        this.availableRoutes = new ArrayList<>();
+        this.trip = new Trip();
+        this.availableDrivers = new ArrayList<>();
     }
 
-    public Route getRoute() {
-        return route;
+    public Trip getTrip() {
+        return trip;
     }
 
-    public List<Route> getAvailableRoutes() {
-        return availableRoutes;
+    public Collection<Driver> getAvailableDrivers() {
+        return availableDrivers;
     }
 
     public List<Passenger> getPassengers() {
         return ClientBuilder.newClient()
                 .target(serviceRegistry.discoverServiceURI("PassengerService"))
-                .path("passenger")
+                .path("passengers")
                 .request()
                 .get(new GenericType<List<Passenger>>() {
                 });
     }
 
-    public List<Route> trip() {
-        List<Route> routes = ClientBuilder.newClient()
+    public Collection<Driver> fetchAvailableDrivers() {
+        Collection<Driver> availableDrivers = ClientBuilder.newClient()
                 .target(serviceRegistry.discoverServiceURI("PassengerService"))
-                .path("passenger").path("trip")
+                .path("drivers").path("available")
                 .request(MediaType.APPLICATION_JSON)
-                .post(Entity.entity(this.route, MediaType.APPLICATION_JSON), new GenericType<List<Route>>() {
+                .post(Entity.entity(this.trip, MediaType.APPLICATION_JSON), new GenericType<Collection<Driver>>() {
                 });
-        this.availableRoutes = routes;
-        return routes;
+        this.availableDrivers = availableDrivers;
+        return availableDrivers;
     }
 
 }

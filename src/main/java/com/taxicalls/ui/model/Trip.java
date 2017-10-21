@@ -11,13 +11,13 @@ import java.io.Serializable;
  *
  * @author romulo
  */
-public class Route implements Serializable {
+public class Trip implements Serializable {
 
     private Integer id;
     private Address addressFrom;
     private Address addressTo;
 
-    public Route() {
+    public Trip() {
     }
 
     public Integer getId() {

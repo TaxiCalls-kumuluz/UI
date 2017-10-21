@@ -23,20 +23,20 @@
                     #{passenger.password}
             </h:column>
         </h:dataTable>
-        <h:dataTable value="#{routesBean.allRoutes}" var="route">
+        <h:dataTable value="#{tripBean.trips}" var="trip">
             <h:column>
                 <f:facet name="header">ID</f:facet>
-                    #{route.id}
+                    #{trip.id}
             </h:column>
         </h:dataTable>
         <h:form>
-            <h:inputText value="#{passengerBean.route.id}" required="true" label=""/>
-            <h:commandButton value="Submit" actionListener="#{passengerBean.trip()}" />
+            <h:inputText value="#{passengerBean.trip.id}" required="true" label=""/>
+            <h:commandButton value="Submit" actionListener="#{passengerBean.fetchAvailableDrivers()}" />
         </h:form>
-        <h:dataTable value="#{passengerBean.availableRoutes}" var="route">
+        <h:dataTable value="#{passengerBean.availableDrivers}" var="trip">
             <h:column>
                 <f:facet name="header">ID</f:facet>
-                    #{route.id}
+                    #{trip.id}
             </h:column>
         </h:dataTable>
     </h:body>

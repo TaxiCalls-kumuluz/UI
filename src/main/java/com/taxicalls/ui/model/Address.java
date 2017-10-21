@@ -17,4 +17,12 @@ public class Address {
         this.coordinate = coordinate;
     }
 
+    public Address() {
+        this.coordinate = null;
+    }
+
+    public Coordinate getCoordinate() {
+        return coordinate;
+    }
+
 }

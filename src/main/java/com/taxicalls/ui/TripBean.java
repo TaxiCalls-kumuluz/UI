@@ -1,6 +1,6 @@
 package com.taxicalls.ui;
 
-import com.taxicalls.ui.model.Route;
+import com.taxicalls.ui.model.Trip;
 import com.taxicalls.utils.ServiceRegistry;
 
 import java.util.List;
@@ -11,15 +11,15 @@ import javax.ws.rs.client.ClientBuilder;
 import javax.ws.rs.core.GenericType;
 
 @Model
-public class RoutesBean {
+public class TripBean {
 
     @Inject
     private ServiceRegistry serviceRegistry;
 
-    public List<Route> getAllRoutes() {
+    public List<Trip> getTrips() {
         return ClientBuilder.newClient()
-                .target(serviceRegistry.discoverServiceURI("RoutesService")).path("routes")
-                .request().get(new GenericType<List<Route>>() {
+                .target(serviceRegistry.discoverServiceURI("TripService")).path("trips")
+                .request().get(new GenericType<List<Trip>>() {
                 });
     }
 
