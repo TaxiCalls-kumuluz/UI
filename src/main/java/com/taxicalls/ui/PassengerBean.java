@@ -1,5 +1,6 @@
 package com.taxicalls.ui;
 
+import com.taxicalls.protocol.Response;
 import com.taxicalls.ui.model.Driver;
 import com.taxicalls.ui.model.Passenger;
 import com.taxicalls.ui.model.Trip;
@@ -7,13 +8,10 @@ import com.taxicalls.utils.ServiceRegistry;
 import java.util.ArrayList;
 import java.util.Collection;
 
-import java.util.List;
-
 import javax.enterprise.inject.Model;
 import javax.inject.Inject;
 import javax.ws.rs.client.ClientBuilder;
 import javax.ws.rs.client.Entity;
-import javax.ws.rs.core.GenericType;
 import javax.ws.rs.core.MediaType;
 
 @Model
@@ -38,22 +36,22 @@ public class PassengerBean {
         return availableDrivers;
     }
 
-    public List<Passenger> getPassengers() {
-        return ClientBuilder.newClient()
+    public Collection<Passenger> getPassengers() {
+        Response response = ClientBuilder.newClient()
                 .target(serviceRegistry.discoverServiceURI("PassengerService"))
                 .path("passengers")
                 .request()
-                .get(new GenericType<List<Passenger>>() {
-                });
+                .get(Response.class);
+        return (Collection<Passenger>) response.getEntity();
     }
 
     public Collection<Driver> fetchAvailableDrivers() {
-        Collection<Driver> availableDrivers = ClientBuilder.newClient()
+        Response response = ClientBuilder.newClient()
                 .target(serviceRegistry.discoverServiceURI("PassengerService"))
                 .path("drivers").path("available")
                 .request(MediaType.APPLICATION_JSON)
-                .post(Entity.entity(this.trip, MediaType.APPLICATION_JSON), new GenericType<Collection<Driver>>() {
-                });
+                .post(Entity.entity(this.trip, MediaType.APPLICATION_JSON), Response.class);
+        Collection<Driver> availableDrivers = (Collection<Driver>) response.getEntity();
         this.availableDrivers = availableDrivers;
         return availableDrivers;
     }
